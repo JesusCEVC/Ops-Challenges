@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Script: Ops 201 Class 05 Ops Challenge Solution
+# Author: emilio
+# Date of latest revision: 2-10-23
+# Purpose: Write a script that displays running processes, asks the user for a PID, then kills the process with that PID.
+
+
+# Main
+
+
+
+
+# End
