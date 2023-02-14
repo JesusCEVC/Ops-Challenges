@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# The level names
+levels=("level1" "level2" "level3" "boss_level")
+
+# Loop through the levels
+for level in "$levels"
+do
+  
+  # Check if the level exists
+  if [ ! -e "$level" ]
+  then
+   
+    # Create the nonexistent level
+    echo "Creating $level"
+    mkdir "$level"
+ 
+  else
+    echo "$level Ready"
+ 
+  fi
+done
