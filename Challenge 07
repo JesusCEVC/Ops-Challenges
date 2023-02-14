@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+echo "emilio"
+sudo lshw | grep "ubuntuservervm" -C 0
+
+echo "CPU Info"
+sudo lshw | grep "*-cpu" -A 8
+
+echo "RAM Info"
+sudo lshw | grep "*-memory" -A 3
+
+echo "Display Info"
+sudo lshw | grep "*-display" -A 12
+
+echo "Network Info"
+sudo lshw | grep "*-network" -A 15
