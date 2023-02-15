@@ -1,0 +1,5 @@
+set "source=Local Disk (C): C:\Users\j.thompson\Desktop\My Project Files"
+
+set "destination=New Volume (E): E:\Jorge\Work Copies"
+
+robocopy %source% %destination% /e /mir
