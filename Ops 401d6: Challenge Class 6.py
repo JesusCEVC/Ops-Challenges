@@ -3,6 +3,26 @@
 from cryptography.fernet import Fernet
 import os
 
+# Function to encrypt a file or directory recursively
+def encrypt_path(path):
+    if os.path.isfile(path):
+        # Encrypt the file
+        encrypt_file(path)
+    elif os.path.isdir(path):
+        # Encrypt all files and directories within the directory
+        for filename in os.listdir(path):
+            encrypt_path(os.path.join(path, filename))
+
+# Function to decrypt a file or directory recursively
+def decrypt_path(path):
+    if os.path.isfile(path):
+        # Decrypt the file
+        decrypt_file(path)
+    elif os.path.isdir(path):
+        # Decrypt all files and directories within the directory
+        for filename in os.listdir(path):
+            decrypt_path(os.path.join(path, filename))
+
 # Function to encrypt a file
 def encrypt_file(file_path):
     # Generate a new key
@@ -25,7 +45,6 @@ def encrypt_file(file_path):
         f.write(key)
 
     print(f"'{file_path}' has been encrypted.")
-
 
 # Function to decrypt a file
 def decrypt_file(file_path):
@@ -50,7 +69,6 @@ def decrypt_file(file_path):
 
     print(f"'{file_path}' has been decrypted.")
 
-
 # Function to encrypt a message
 def encrypt_message(cleartext):
     # Generate a new key
@@ -68,7 +86,6 @@ def encrypt_message(cleartext):
     print("Key: ")
     print(key.decode())
 
-
 # Function to decrypt a message
 def decrypt_message(ciphertext, key):
     # Decrypt the message
@@ -79,31 +96,13 @@ def decrypt_message(ciphertext, key):
     print("Decrypted message: ")
     print(decrypted_data.decode())
 
-
 # Prompt the user to select a mode
-mode = input("Select a mode:\n1. Encrypt a file\n2. Decrypt a file\n3. Encrypt a message\n4. Decrypt a message\n")
+mode = input("Select a mode:\n1. Encrypt a file\n2. Decrypt a file\n3. Encrypt a message\n4. Decrypt a message\n5. Encrypt a directory\n6. Decrypt a directory\n")
 
 # Handle the different modes
 if mode == "1":
     # Prompt the user to provide a filepath to a target file
-    file_path = input("PLease Provide file path: ")
+    file_path = input("Please provide the file path: ")
     encrypt_file(file_path)
 
-elif mode == "2":
-    # Prompt the user to provide a filepath to a target file
-    file_path = input("Please provide the file path: ")
-    decrypt_file(file_path)
-
-elif mode == "3":
-    # Prompt the user to provide a cleartext string
-    cleartext = input("Provide the cleartext string: ")
-    encrypt_message(cleartext)
-
-elif mode == "4":
-    # Prompt the user to provide a ciphertext and key
-    ciphertext = input("Please provide ciphertext: ")
-    key = input("Provide the key: ")
-    decrypt_message(ciphertext, key)
-
-else:
-    print("Invalid mode selected.")
+elif mode == "
