@@ -1,6 +1,9 @@
 import time
 import paramiko
 
+# W/ ChatGPT Assistance
+
+
 # Prompt the user to select the mode
 print("Select mode:")
 print("1. Offensive; Dict. Iterator")
