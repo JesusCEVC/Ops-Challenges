@@ -1,15 +1,14 @@
 import time
 import paramiko
-
-# W/ ChatGPT Assistance
-
+import zipfile
 
 # Prompt the user to select the mode
 print("Select mode:")
 print("1. Offensive; Dict. Iterator")
 print("2. Defensive; Psw. Recognized")
 print("3. SSH Authentication")
-mode = input("Enter mode number (1, 2, or 3): ")
+print("4. ZIP Password Cracker")
+mode = input("Enter mode number (1, 2, 3, or 4): ")
 
 # If the user selects mode 1
 if mode == '1':
@@ -55,6 +54,25 @@ elif mode == '3':
                 # If authentication fails, print a message indicating the password was not successful
                 print(f"Login failed for password: {password}")
 
+# If the user selects mode 4
+elif mode == '4':
+    zip_file_path = input("Enter path to password-locked zip file: ")
+    word_list_file = input("Enter word list file path (e.g. rockyou.txt): ")
+    # Open the password-locked zip file and iterate through each password in the word list
+    with zipfile.ZipFile(zip_file_path) as zip_file:
+        with open(word_list_file, 'r') as f:
+            for password in f:
+                password = password.strip()  # Remove any whitespace
+                try:
+                    # Try to extract the secret message using the current password
+                    zip_file.extract("secret.txt", pwd=password.encode('utf-8'))
+                    # If extraction is successful, print the password and break out of the loop
+                    print(f"Password cracked! Password: {password}")
+                    break
+                except:
+                    # If extraction fails, try the next password in the word list
+                    pass
+
 # If the user selects an invalid mode
 else:
-    print("Invalid mode selected.")
+   
