@@ -7,6 +7,7 @@ import os
 import logging
 from getpass import getpass
 from logging.handlers import RotatingFileHandler
+from logging import StreamHandler
 
 # Set up logging
 log_file = 'monitor.log'
@@ -14,13 +15,19 @@ log_max_size = 1024  # Maximum log file size in kilobytes
 log_backup_count = 3  # Number of backup log files to keep
 
 # Create a rotating file handler for logging
-handler = RotatingFileHandler(log_file, maxBytes=log_max_size * 1024, backupCount=log_backup_count)
-handler.setLevel(logging.INFO)
-handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+file_handler = RotatingFileHandler(log_file, maxBytes=log_max_size * 1024, backupCount=log_backup_count)
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 
-# Create a logger and add the rotating file handler
+# Create a stream handler for logging to the terminal
+stream_handler = StreamHandler()
+stream_handler.setLevel(logging.INFO)
+stream_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+
+# Create a logger and add the handlers
 logger = logging.getLogger()
-logger.addHandler(handler)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
 # Declare Vars
 up = "Network is active"
@@ -51,7 +58,7 @@ def send_down_alert():
     s.starttls()
     s.login(email, password)
     message = "Server is down, RIP"
-    s.sendmail("scalio137@gmail.com", email, message)
+    s.sendmail("AnonymousWorker157@gmail.com", email, message)
     s.quit()
     logger.warning("Server is down - Email sent")
 
