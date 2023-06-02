@@ -1,6 +1,9 @@
 import os
 import hashlib
 import time
+import requests
+
+API_KEY = "YOUR_VIRUSTOTAL_API_KEY"
 
 def search_files(filename, directory):
     # Counter for the total number of files searched
@@ -42,10 +45,30 @@ def search_files(filename, directory):
                 print(f"MD5 Hash: {md5_hash.hexdigest()}")
                 print()
 
+                # Check file hash with VirusTotal
+                scan_result = check_file_hash(md5_hash.hexdigest())
+                if scan_result:
+                    positives = scan_result['positives']
+                    total = scan_result['total']
+                    print(f"VirusTotal Scan Results: {positives}/{total} positives detected")
+                    print()
+
             searched_files += 1
 
     # Print the search summary
     print(f"\nSearch completed.\nSearched files: {searched_files}\nHits: {hits}")
+
+def check_file_hash(file_hash):
+    url = f"https://www.virustotal.com/api/v3/files/{file_hash}"
+    headers = {
+        "x-apikey": API_KEY
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        return response.json().get('data', {})
+    else:
+        print("Error occurred while connecting to VirusTotal API.")
+        return None
 
 def main():
     filename = input("Enter the file name to search for: ")
